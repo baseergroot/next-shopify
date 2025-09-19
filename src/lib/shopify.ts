@@ -6,7 +6,7 @@ const token:string = process.env.NEXT_PUBLIC_SHOPIFY_STOREFRONT_ACCESS_TOKEN!;
 if (!domain || !token) {
   throw new Error("Missing Shopify credentials");
 }
-console.log("Shopify credentials:", domain, token);
+// console.log("Shopify credentials:", domain, token);
 
 export async function getProducts() {
   const query = `
