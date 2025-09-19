@@ -7,21 +7,27 @@ export default function ProductClient({ product }: { product: any }) {
   const [cart, setCart] = useState<any>(null);
 
   async function handleAddToCart() {
-    let currentCart = cart;
+  console.log("Cart before add:", cart);
 
-    if (!currentCart) {
-      currentCart = await createCart();
-    }
-
-    const updatedCart = await addToCart(
-      currentCart.id,
-      product.variants.edges[0].node.id, // ✅ will exist now
-      1
-    );
-
-    setCart(updatedCart);
-    alert("✅ Added to cart!");
+  let currentCart = cart;
+  if (!currentCart) {
+    currentCart = await createCart();
+    console.log("Created cart:", currentCart);
   }
+
+  console.log("Variant ID:", product.variants.edges[0].node.id);
+
+  const updatedCart = await addToCart(
+    currentCart.id,
+    product.variants.edges[0].node.id,
+    1
+  );
+
+  console.log("Updated cart:", updatedCart);
+  setCart(updatedCart);
+  alert("✅ Added to cart!");
+}
+
 
   return (
     <main className="p-6">

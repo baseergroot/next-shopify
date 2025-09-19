@@ -1,7 +1,12 @@
 import axios from "axios";
 
-const domain = process.env.SHOPIFY_STORE_DOMAIN!;
-const token = process.env.SHOPIFY_STOREFRONT_ACCESS_TOKEN!;
+const domain:string = process.env.NEXT_PUBLIC_SHOPIFY_STORE_DOMAIN!;
+const token:string = process.env.NEXT_PUBLIC_SHOPIFY_STOREFRONT_ACCESS_TOKEN!;
+
+if (!domain || !token) {
+  throw new Error("Missing Shopify credentials");
+}
+console.log("Shopify credentials:", domain, token);
 
 export async function getProducts() {
   const query = `
@@ -36,7 +41,6 @@ export async function getProducts() {
 
   return res.data.data.products.edges.map((edge: any) => edge.node);
 }
-
 
 export async function getProduct(handle: string) {
   const query = `
@@ -121,6 +125,7 @@ export async function createCart() {
 
   return res.data.data.cartCreate.cart;
 }
+
 
 // ➕ Add item to cart
 export async function addToCart(cartId: string, variantId: string, quantity: number) {
